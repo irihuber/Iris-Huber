@@ -7,8 +7,10 @@ d = {i: 0 for i in range(1, 46)}   #{1:0,2:0,3:0,4:0,5:0,6:0,7:0,...,45:0}
 z1=0
 z2=0
 
+print("Variante1") # zu komliziert gelöst
 for z in range(1000):
-    zahlen = list(range(1, 46))  # [0, 1, 2, 3, 4, ..., 45]
+    zahlen = list(range(1, 46))  # [1, 2, 3, 4, ..., 45]
+    lottozahlen = [0] * 6
     zaehler = 44
     for z in zahlen: # liste mit durchgeschaffelten zahlen
         rdnzahl = random.randint(0, zaehler)
@@ -18,7 +20,23 @@ for z in range(1000):
         zahlen[rdnzahl] = z1
         zaehler -= 1
     for i in range(6): # 6 Lottozahlen ziehen
-        lzstelle = random.randint(0, len(zahlen)-1) # stelle wird von zahlen gewählt
-        lzahl = zahlen[lzstelle] # lottozahl ist wo rnd stelle gewählt wurde
+        lzstelle = random.randint(0, len(zahlen) - 1)  # stelle wird von zahlen gewählt
+        lzahl = zahlen[lzstelle]  # lottozahl ist wo rnd stelle gewählt wurde
+        while lzahl in lottozahlen: # solange ziehen bis lottozahl dabei ist die nicht bereits gezogen wurde
+            lzstelle = random.randint(0, len(zahlen)-1)
+            lzahl = zahlen[lzstelle]
+        lottozahlen[i] = zahlen[lzstelle] # speichern damit keine Zahl doppelt kommt
         d[lzahl] += 1 # Zahl +1 zählen
+print(d)
+
+print("Variante2") # sollte so korrekt sein
+for i in range(1000):
+    numbers = list(range(1, 46))  # [1, 2, 3, 4, ..., 45]
+    counter = 44
+    for j in range(6): # 6 Lottozahlen ziehen
+        lzahl = random.randint(0,counter)
+        numbers[counter] = numbers[lzahl] # gezogene Zahl und counter (letzte, vorletzte, ... Zahl) wechseln Platz
+        numbers[lzahl] = counter
+        counter -= 1
+        d[lzahl+1] += 1 # Zahl an dieser Stelle wurde als Lottozahl gezogen
 print(d)

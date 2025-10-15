@@ -1,3 +1,5 @@
+"""
+# Methoden OHNE comprehension
 def list_comprehension():
     # Zahlen von 1–10 jeweils Ausgabe ob "gerade" oder "ungerade"
     zahlen = []
@@ -27,6 +29,26 @@ def dict_comprehension():
     ergebnis = {}
     for i in range(1, 11): # Zahlen von 1-10
         ergebnis[i]= i*i # Zahl mit jeweiliger Potenz
+    return ergebnis
+
+"""
+# Methoden MIT comprehension
+def list_comprehension():
+    # Zahlen von 1–10 jeweils Ausgabe ob "gerade" oder "ungerade"
+    zahlen = [i for i in range(1, 11)]
+    ergebnis = ["gerade" if i % 2 == 0 else "ungerade" for i in zahlen]
+    return ergebnis
+
+
+def set_comprehension():
+    # Ausschließlich gerade Zahlen von 1–10 in ein Set speichern
+    ergebnis = {i for i in range(1, 11) if i % 2 == 0} # nur gerade Zahlen: {2, 4, 6, 8, 10}
+    return ergebnis
+
+
+def dict_comprehension():
+    # Quadratzahl der jeweiligen Zahl von 1-10 als Dictionary darstellen
+    ergebnis = {i: i**2 for i in range(1, 11)}  # Zahl mit jeweiliger Potenz
     return ergebnis
 
 

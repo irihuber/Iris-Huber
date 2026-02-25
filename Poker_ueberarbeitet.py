@@ -1,5 +1,11 @@
+import functools
 import random
+import time
+
 from collections import Counter
+
+
+
 
 """
 Erstellen und Ziehen der Karten
@@ -35,11 +41,8 @@ def farbzuordnung(karten): # 0=Pik, 1=Herz, 2=Karo, 3=Kreuz
         farben[karte] = karten[karte] // 13 # ganzzahlig teilen für Farbe
     return farben"""
     return [karte // 13 for karte in karten]
+
 def symbolzuordnung(karten): # 0=Ass, 1=2, 2=3, ..., 10=Bube, 11=Dame, 12=König
-    """symbole = {}
-    for i in range(len(karten)):
-        symbole[i] = karten[i] % 13 # ganzzahlig teilen für Farbe
-    return symbole"""
     return [symbol % 13 for symbol in karten]
 
 """
@@ -136,7 +139,18 @@ def auswertung(royal_flush_c, straight_flush_c, vierling_c, fullhouse_c, flush_c
     elif paar(paar_anzahl):
         paar_c += 1
     return royal_flush_c, straight_flush_c, vierling_c, fullhouse_c, flush_c, strasse_c, drilling_c, doppelp_c, paar_c
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs): # kwargs --> sollte universell sein
+        start_time = time.perf_counter()
+        value = func(*args, **kwargs) # ruft Originalfunktion auf & speichert in Rückgabewrt
+        end_time= time.perf_counter()
+        run_time = end_time - start_time
+        print(f"{func.__name__} brauchte {run_time:.2f} sec")
+        return value
+    return wrapper
 
+@timer
 def poker_wahr(spielanzahl): # Poker Wahrscheinlichkeiten
     royal_flush_c = 0
     straight_flush_c = 0
